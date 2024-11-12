@@ -129,19 +129,6 @@ class LendingController extends Controller
         return $books;
     }
 
-    public function lendingsBooksOnee()
-{
-    $user = Auth::user();
-    // Lekérdezzük a könyveket, amelyekből maximum 1 példány van a felhasználó raktárában
-    $books = DB::table('lendings as l')
-    ->join('copies as c','1.copy_id','c.copy_id')
-    ->join('books as b','c.book_id','b.copy_id')
-    ->selectRaw('count(*) as ennyiszer, b.book_id, author,title')
-    ->where('user_id, $user->id')
-    ->groupBy('b.book_id')
-    ->havingRaw('ennyiszer <2')
-    ->get();
-    return $books;
-}
+
 
 }

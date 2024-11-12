@@ -136,11 +136,11 @@ class LendingController extends Controller
     $books = DB::table('lendings as l')
     ->join('copies as c','1.copy_id','c.copy_id')
     ->join('books as b','c.book_id','b.copy_id')
-    ->selectRaw('count(*) as ennyiszer, b.book_id,')
+    ->selectRaw('count(*) as ennyiszer, b.book_id, author,title')
     ->where('user_id, $user->id')
     ->groupBy('b.book_id')
-    ->having('count()','<',2)
-    ->count();
+    ->havingRaw('ennyiszer <2')
+    ->get();
     return $books;
 }
 

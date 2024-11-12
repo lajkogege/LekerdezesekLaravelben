@@ -144,4 +144,11 @@ class LendingController extends Controller
     return $books;
 }
 
+public function hardCoveredBooks(){
+    $books=DB::table('books as b')
+    ->join('copies as c', 'b.book_id', 'c.book_id')
+    ->select('author', 'title')
+    ->where('hardcovered',$value=0)
+    ->distinct
+}
 }
